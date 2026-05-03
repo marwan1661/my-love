@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>رسالة خاصة جداً ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        /* قلوب الخلفية */
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 15px;
+            animation: float 6s infinite linear;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 10;
+            width: 85%;
+            max-width: 350px;
+        }
+
+        h1 { color: #d63384; font-size: 1.5rem; margin-bottom: 30px; }
+
+        .buttons-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            height: 100px;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #loveBtn {
+            background: #ff4d6d;
+            color: white;
+            z-index: 5;
+        }
+
+        #hateBtn {
+            background: #6c757d;
+            color: white;
+            position: absolute;
+            left: 55%; /* بيبدأ جنب بحبك */
+        }
+
+        /* رسالة فكاهية تظهر فوق الزرار */
+        #funnyNote {
+            position: fixed;
+            background: #333;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: none;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        #finalMessage {
+            display: none;
+            font-size: 20px;
+            color: #c9184a;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        .signature {
+            display: block;
+            margin-top: 20px;
+            font-size: 45px;
+            color: #111;
+            font-family: 'Comic Sans MS', cursive;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+    <div id="funnyNote">دوسي على بحبك 😡</div>
+
+    <div class="container" id="mainCard">
+        <div id="content">
+            <h1>اختاري بسرعة.. 👀</h1>
+            <div class="buttons-wrapper">
+                <button id="loveBtn" onclick="showLove()">بحبك</button>
+                <button id="hateBtn" onclick="moveHate()" ontouchstart="moveHate()">بكرهك</button>
+            </div>
+        </div>
+
+        <div id="finalMessage">
+            " انا كمان بحبك ياروح قلبي ياقطتي يا كل حياتي ياسكر انتي ربنا يديمك ليا و مايحرمنيش منك ابدا🌚❤️ يا قمري انتي بحبك ياروحي🥰❤️❤️ "
+            <br>
+            <span class="signature">Marwan</span>
+        </div>
+    </div>
+
+    <script>
+        // قلوب الخلفية
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        const hateBtn = document.getElementById('hateBtn');
+        const funnyNote = document.getElementById('funnyNote');
+        
+        const jokes = [
+            "مش هتعرفي تدوسي 😜",
+            "دوسي على بحبك 😡",
+            "رايحة فين؟ 😂",
+            "حاولي تاني يا قطتي 🐈",
+            "يا بنتي قولتلك بحبك أسهل! 🙄"
+        ];
+
+        function moveHate(e) {
+            if(e) e.preventDefault(); // عشان الموبايل ميعملش زووم أو تعليق
+
+            // اختيار مكان عشوائي مع مراعاة حدود شاشة الموبايل
+            const maxX = window.innerWidth - hateBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - hateBtn.offsetHeight - 20;
+            
+            const newX = Math.max(10, Math.random() * maxX);
+            const newY = Math.max(10, Math.random() * maxY);
+
+            hateBtn.style.position = 'fixed';
+            hateBtn.style.left = newX + 'px';
+            hateBtn.style.top = newY + 'px';
+
+            // إظهار الرسالة الفكاهية
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            funnyNote.innerText = randomJoke;
+            funnyNote.style.display = 'block';
+            funnyNote.style.left = (newX) + 'px';
+            funnyNote.style.top = (newY - 40) + 'px';
+
+            // إخفاء الرسالة بعد ثانية
+            setTimeout(() => {
+                funnyNote.style.display = 'none';
+            }, 1000);
+        }
+
+        function showLove() {
+            document.getElementById('content').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'block';
+            document.body.style.background = "#ffb3c1";
+            funnyNote.style.display = 'none';
+            hateBtn.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
